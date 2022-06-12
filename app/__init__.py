@@ -21,6 +21,19 @@ phieu = {
     'thoigiandat': ''
 }
 
+dsthongsohang = []
+thongsohang = {
+    'mavandon': '',
+    'dai' : '',
+    'rong' : '',
+    'cao' : '',
+    'khoiluong' :'',
+    'mankl' : '',
+    'maloai' : '',
+    'phivanchuyen' : '',
+    'cod' : ''
+}
+
 dsdonhang = []
 donhang = {
     'mavandon': '',

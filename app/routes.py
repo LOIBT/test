@@ -1,6 +1,6 @@
-from app import app, pool, dsphieu, phieu, dsdonhang, donhang
+from app import app, pool, dsphieu, phieu, dsdonhang, donhang, dsthongsohang, thongsohang
 from flask import render_template
-from app.forms import PhanCongForm, ChiaTuDong, TestForm, DangKyDonForm, TraCuuThongTinNV, SearchForm
+from app.forms import PhanCongForm, DangKyDonForm, TraCuuThongTinNV, SearchForm, TraCuuThongTinKH, TraCuuThongTinAllKH
 from datetime import date,timedelta
 from app.forms import User
 from flask import (
@@ -14,23 +14,55 @@ from flask import (
     flash
 )
 
+@app.route('/thongtinkh', methods=['GET', 'POST'])
+def thongtinkh():
+    form = TraCuuThongTinKH()
+
+    connection = pool.acquire()
+    cursor = connection.cursor()
+
+    query1 = "select * from KHACHHANG"
+
+    cursor.execute(query1)
+    kq1 = cursor.fetchall()
+    if form.validate_on_submit():
+            makh = form.makh.data
+
+            connection = pool.acquire()
+            cursor = connection.cursor()
+
+            query = f" select * from KHACHHANG where MaKhachHang = {makh}"
+
+            cursor.execute(query)
+            kq = cursor.fetchall()
+
+            connection.commit()
+            pool.release(connection)
+
+            return render_template('tracuukh1.html',formmakh=form,kh=kq, kh1=kq1)
+    connection.commit()
+    pool.release(connection)
+    return render_template('tracuukh.html', formmakh=form, kh1=kq1)
 
 @app.route('/thongtinnv', methods=['GET', 'POST'])
 def thongtinnv():
     form2 = TraCuuThongTinNV()
-    if form2.validate_on_submit():
-        cccd = form2.cccd.data
+    query1 = """select MaNhanVien,Email,TenNhanVien,SDT,DiaChi,CCCD,TenChucVu,to_char(ngaysinh,'DD/MM/YYYY') 
+    from NHANVIENBD a, CHUCVU b where a.MaChucVu = b.MaChucVu """
 
-        connection = pool.acquire()
-        cursor = connection.cursor()
+    connection = pool.acquire()
+    cursor = connection.cursor()
+
+    cursor.execute(query1)
+    kq1 = cursor.fetchall()
+    if form2.validate_on_submit():
+        manv = form2.manv.data
 
         cursor.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY HH24:MI:SS'")
 
-        query = f"select * from NHANVIENBD where CCCD = {cccd}"
+        query = f"select * from NHANVIENBD where MaNhanVien = {manv}"
         cursor.execute(query)
         kq = cursor.fetchall()
-
-        manv = int(kq[0][0])
 
         query = f"select TenChucVu from CHUCVU a, NHANVIENBD b where a.MaChucVu = b.MaChucVu and b.MaNhanVien = {manv}"
         cursor.execute(query)
@@ -49,7 +81,11 @@ def thongtinnv():
 
             cursor.execute(query)
             lichsuhc = cursor.fetchall()
-            return render_template('tracuunv1.html', form=form2, thongtin = kq, chucvu = tencv , ngaysinh = ngsinh, lichsunvhc = lichsuhc)
+            connection.commit()
+            pool.release(connection)
+
+            return render_template('tracuunv1.html', form=form2, nv=kq1,
+            thongtin = kq, chucvu = tencv , ngaysinh = ngsinh, lichsunvhc = lichsuhc)
         else: 
             print('NV Giao hàng')
             query = f"""select a.madonhang, a.mavandon, a.madk, manhanvien
@@ -59,12 +95,13 @@ def thongtinnv():
 
             cursor.execute(query)
             lichsugh = cursor.fetchall()
-            return render_template('tracuunv2.html', form=form2, thongtin = kq, chucvu = tencv , ngaysinh = ngsinh, lichsunvgh = lichsugh)
-        connection.commit()
-        pool.release(connection)
 
-        
-    return render_template('tracuunv.html', form=form2)
+            connection.commit()
+            pool.release(connection)
+
+            return render_template('tracuunv2.html', form=form2, nv=kq1,
+            thongtin = kq, chucvu = tencv , ngaysinh = ngsinh, lichsunvgh = lichsugh)
+    return render_template('tracuunv.html', form=form2 , nv=kq1)
 
 @app.route('/phancongcalam', methods=['GET', 'POST'])
 def phancongcalam():
@@ -81,11 +118,10 @@ def phancongcalam():
         query = f"insert into PHANCONGCALAM values ({manv},{ca},to_date({thoigian},'DD/MM/YYYY'))"
         cursor.execute(query)
 
-        # cursor.callproc('TuDongPhanChiaGiaoHangTheoCa',[2])
-
         connection.commit()
         pool.release(connection)
 
+        return redirect(url_for('phancongcalam'))
     connection = pool.acquire()
     cursor = connection.cursor()
     connection.commit()
@@ -97,12 +133,6 @@ def phancongcalam():
     wed = mon + timedelta(days=2)
     thu = mon + timedelta(days=3)
     fri = mon + timedelta(days=4)
-    # print("Today: " + str(today))
-    # print("Mon: " + str(mon))
-    # print("Tue: " + str(tue))
-    # print("Wed: " + str(wed))
-    # print("Thu: " + str(thu))
-    # print("Fri: " + str(fri))
 
     t2 = mon.strftime('%d/%m/%Y')
     chuoit2 = "'" + t2 +"'"
@@ -119,60 +149,187 @@ def phancongcalam():
     t6 = fri.strftime('%d/%m/%Y')
     chuoit6 = "'" + t6 +"'"
 
-    # Cac ma nhan vien ca 1
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit2},1))")
-    t2ca1 = cursor.fetchall()
+    # Ma nhan vien giao hang ca 1
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit2},1))")
+    manvght2ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit3},1))")
-    t3ca1 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit3},1))")
+    manvght3ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit4},1))")
-    t4ca1 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit4},1))")
+    manvght4ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit5},1))")
-    t5ca1 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit5},1))")
+    manvght5ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit6},1))")
-    t6ca1 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit6},1))")
+    manvght6ca1 = cursor.fetchall()
 
-    # Cac ma nhan vien ca 2
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit2},2))")   
-    t2ca2 = cursor.fetchall()
+    # Ma nhan vien hanh chinh ca 1
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit2},1))")
+    manvhct2ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit3},2))")
-    t3ca2 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit3},1))")
+    manvhct3ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit4},2))")
-    t4ca2 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit4},1))")
+    manvhct4ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit5},2))")
-    t5ca2 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit5},1))")
+    manvhct5ca1 = cursor.fetchall()
 
-    cursor.execute(f"select * from table (Func_MaNhanVienDuocPhanCong ({chuoit6},2))")
-    t6ca2 = cursor.fetchall()
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit6},1))")
+    manvhct6ca1 = cursor.fetchall()
+
+    # Ma nhan vien giao hang ca 2
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit2},2))")
+    manvght2ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit3},2))")
+    manvght3ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit4},2))")
+    manvght4ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit5},2))")
+    manvght5ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienGHDuocPhanCong ({chuoit6},2))")
+    manvght6ca2 = cursor.fetchall()
+
+    # Ma nhan vien hanh chinh ca 2
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit2},2))")
+    manvhct2ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit3},2))")
+    manvhct3ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit4},2))")
+    manvhct4ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit5},2))")
+    manvhct5ca2 = cursor.fetchall()
+
+    cursor.execute(f"select distinct manv,tennv from table (Func_MaNhanVienHCDuocPhanCong ({chuoit6},2))")
+    manvhct6ca2 = cursor.fetchall()
+
+    # So nhan vien giao hàng ca 1
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit2},1))")
+    ght2ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit3},1))")
+    ght3ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit4},1))")
+    ght4ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit5},1))")
+    ght5ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit6},1))")
+    ght6ca1 = cursor.fetchall()
+
+    # So nhan vien hanh chinh ca 1
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit2},1))")
+    hct2ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit3},1))")
+    hct3ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit4},1))")
+    hct4ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit5},1))")
+    hct5ca1 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit6},1))")
+    hct6ca1 = cursor.fetchall()
+
+    # So nhan vien giao hang ca 2
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit2},2))")   
+    ght2ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit3},2))")
+    ght3ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit4},2))")
+    ght4ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit5},2))")
+    ght5ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienGHDuocPhanCong ({chuoit6},2))")
+    ght6ca2 = cursor.fetchall()
+
+    # So nhan vien hanh chinh ca 2
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit2},2))")   
+    hct2ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit3},2))")
+    hct3ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit4},2))")
+    hct4ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit5},2))")
+    hct5ca2 = cursor.fetchall()
+
+    cursor.execute(f"select COUNT(distinct manv) from table (Func_MaNhanVienHCDuocPhanCong ({chuoit6},2))")
+    hct6ca2 = cursor.fetchall()
 
     connection.commit()
     pool.release(connection)
 
-    form3 = ChiaTuDong()
-    if form3.validate_on_submit():
-        connection = pool.acquire()
-        cursor = connection.cursor()
+    # form3 = ChiaTuDong()
+    # if form3.validate_on_submit():
+    #     connection = pool.acquire()
+    #     cursor = connection.cursor()
 
-        cursor.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY HH24:MI:SS'")
+    #     cursor.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY HH24:MI:SS'")
 
-        cursor.callproc('TuDongPhanChiaGiaoHangTheoCa',[2])
-        # cursor.execute("begin TuDongPhanChiaGiaoHangTheoCa(:1); end;", [2])
-        connection.commit()
-        pool.release(connection)
-    return render_template('phancongcalam.html', form=form2, formtd = form3,
+    #     cursor.callproc('TuDongPhanChiaGiaoHangTheoCa',[2])
+        
+    #     connection.commit()
+    #     pool.release(connection)
+    return render_template('phancongcalam.html', form=form2,
     ngayt2 = t2, ngayt3 = t3, ngayt4 = t4, ngayt5 = t5, ngayt6 = t6,
-    manvt2ca1 = t2ca1, manvt3ca1 = t3ca1, manvt4ca1 = t4ca1, manvt5ca1 = t5ca1, manvt6ca1 = t6ca1,
-    manvt2ca2 = t2ca2, manvt3ca2 = t3ca2, manvt4ca2 = t4ca2, manvt5ca2 = t5ca2, manvt6ca2 = t6ca2)
+    slght2ca1 = ght2ca1, slght3ca1 = ght3ca1, slght4ca1 = ght4ca1, slght5ca1 = ght5ca1, slght6ca1 = ght6ca1,
+    slhct2ca1 = hct2ca1, slhct3ca1 = hct3ca1, slhct4ca1 = hct4ca1, slhct5ca1 = hct5ca1, slhct6ca1 = hct6ca1,
+    slght2ca2 = ght2ca2, slght3ca2 = ght3ca2, slght4ca2 = ght4ca2, slght5ca2 = ght5ca2, slght6ca2 = ght6ca2,
+    slhct2ca2 = hct2ca2, slhct3ca2 = hct3ca2, slhct4ca2 = hct4ca2, slhct5ca2 = hct5ca2, slhct6ca2 = hct6ca2,
+    manvght2ca1 = manvght2ca1,manvght3ca1 = manvght3ca1,manvght4ca1 = manvght4ca1,manvght5ca1 = manvght5ca1,manvght6ca1 = manvght6ca1,
+    manvhct2ca1 = manvhct2ca1,manvhct3ca1 = manvhct3ca1,manvhct4ca1 = manvhct4ca1,manvhct5ca1 = manvhct5ca1,manvhct6ca1 = manvhct6ca1,
+    manvght2ca2 = manvght2ca2,manvght3ca2 = manvght3ca2,manvght4ca2 = manvght4ca2,manvght5ca2 = manvght5ca2,manvght6ca2 = manvght6ca2,
+    manvhct2ca2 = manvhct2ca2,manvhct3ca2 = manvhct3ca2,manvhct4ca2 = manvhct4ca2,manvhct5ca2 = manvhct5ca2,manvhct6ca2 = manvhct6ca2)
 
 @app.route('/')
 def init():
     return render_template('base.html')
+
+@app.route('/phanconggiaohang')
+def phanconggiaohang():
+    today = date.today()
+
+    homnay = today.strftime('%d/%m/%Y')
+
+    connection = pool.acquire()
+    cursor = connection.cursor()
+
+    cursor.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY HH24:MI:SS'")
+
+    cursor.callproc('Proc_ChayKtraPCGiaoHang')
+
+    query = f"""select MaNhanVien,MaVanDon,ThoiGian 
+    from GIAOHANG, dual
+    where to_char(THOIGIAN,'DD/MM/YYYY') = to_char(sysdate,'DD/MM/YYYY') """
+
+    cursor.execute(query)
+    kq = cursor.fetchall()
+
+    connection.commit()
+    pool.release(connection)
+    
+    return render_template('phanconggiaohang.html',giaohang=kq, homnay = homnay)
 
 @app.route('/home')
 def index():
@@ -220,7 +377,7 @@ def dkdh():
         # 2 là số lượng đơn hàng tối đa mà mỗi ngày shipper được giao (tự quy định)
         cursor.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY HH24:MI:SS'")
         return_val = cursor.callfunc("Func_NgayGiaoNhanhNhat", int, [2])
-        chuoi = 'Đơn hàng sẽ được giao nhanh nhất trong vòng ' + str(return_val) + ' ngày'
+        chuoi = 'Đơn hàng sẽ được giao nhanh nhất trong vòng ' + str(return_val+1) + ' ngày'
 
         connection.commit()
         pool.release(connection)
@@ -259,17 +416,22 @@ def xuatphieu():
     form2 = SearchForm()
     if form2.validate_on_submit():
         mvd = form2.mavandon.data
-        if len(dsphieu) != 0:
-            dsphieu.pop(0)
+
         connection = pool.acquire()
         cursor = connection.cursor()
-        query = """select p.madonhang, p.mavandon, p.tennguoinhan, p.sdtnhan, d.thoigiandat, d.diachigui, d.diachinhan, d.motasp, k.tenkhachhang, k.sdt
-    from phieudonhang p inner join donhangdk d
-    on p.madk = d.madk inner join khachhang k
-    on d.makhachhang = k.makhachhang
-    where mavandon = :mavandon"""
+
+        # Xuat phieu don hang
+        if len(dsphieu) != 0:
+            dsphieu.pop(0)
+
+        query = """select p.madonhang, p.mavandon, p.tennguoinhan, p.sdtnhan, to_char(d.thoigiandat,'DD/MM/YYYY'), d.diachigui, d.diachinhan, d.motasp, k.tenkhachhang, k.sdt
+        from phieudonhang p inner join donhangdk d
+        on p.madk = d.madk inner join khachhang k
+        on d.makhachhang = k.makhachhang
+        where mavandon = :mavandon"""
         cursor.execute(query,[mvd])
         r = cursor.fetchone()
+
         phieu['madonhang'] = r[0]
         phieu['mavandon'] = r[1]
         phieu['tennguoigui'] = r[8]
@@ -281,9 +443,47 @@ def xuatphieu():
         phieu['mota'] = r[7]
         phieu['thoigiandat'] = r[4]
         dsphieu.append(phieu)
+
+        # Thong so hang
+        if len(dsthongsohang) != 0:
+            thongsohang.pop(0)
+
+        query = """select mavandon, dai, rong, cao, khoiluong, mankl, maloai, phivanchuyen, cod
+        from thongsohang where mavandon = :mavandon"""
+        cursor.execute(query,[mvd])
+        kq = cursor.fetchone()
+
+        thongsohang['mavandon'] = kq[0]
+        thongsohang['dai'] = kq[1]
+        thongsohang['rong'] = kq[2]
+        thongsohang['cao'] = kq[3]
+        thongsohang['khoiluong'] = kq[4]
+        thongsohang['mankl'] = kq[5]
+        thongsohang['maloai'] = kq[6]
+        thongsohang['phivanchuyen'] = kq[7]
+        thongsohang['cod'] = kq[8]
+        dsthongsohang.append(thongsohang)
+        # Trang thai
+        if len(dsdonhang) != 0:
+            dsdonhang.pop(0)
+
+        query = """select tsh.mavandon, bd.trangthai, tsh.phivanchuyen, bd.thoigian
+                from thongsohang tsh inner join donhangtaibd bd
+                on tsh.mavandon = bd.mavandon
+                where tsh.mavandon = :mavandon"""
+        cursor.execute(query,[mvd])
+        t = cursor.fetchone()
+
+        donhang['mavandon'] = t[0]
+        donhang['trangthai'] = t[1]
+        donhang['phivanchuyen'] = t[2]
+        donhang['thoigian'] = t[3]
+        dsdonhang.append(donhang)
+
         pool.release(connection)
         return redirect(url_for('xuatphieu'))
-    return render_template('xuatphieu.html', form=form2, dsphieu=dsphieu) 
+    return render_template('xuatphieu.html', form=form2,
+    dsphieu=dsphieu , dsdonhang=dsdonhang , dsthongsohang=dsthongsohang ) 
 
 users = []
 users.append(User(id=1, username='nhuvdk', password='qlbd'))

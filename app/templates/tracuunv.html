@@ -18,8 +18,8 @@
         <div class="formdki">
             <p>
                 {{ form.hidden_tag() }}
-                {{ form.cccd.label() }}
-                {{ form.cccd() }}
+                {{ form.manv.label() }}
+                {{ form.manv() }}
             </p>
 
             <p onclick="TraCuuNV()">
@@ -30,6 +30,11 @@
     </form>
 
     <div>
+        <p> 
+            {% for i in thongtin %}
+                Mã Nhân Viên: {{ i[0] }}
+            {% endfor %}
+        </p>
         <p> 
             {% for i in thongtin %}
                 Email: {{ i[1] }}
@@ -70,5 +75,62 @@
     {% block tracuulichsunv %}
     
     {% endblock %}
+<h4>Danh Sách Nhân Viên</h4>
+    <table>
+        <tr>
+            <td>
+                Mã Nhân Viên
+            </td>
+            <td>
+                Tên Nhân Viên
+            </td>
+            <td>
+                Email
+            </td>
+            <td>
+                Số Điện Thoại
+            </td>
+            <td>
+                Địa chỉ
+            </td>
+            <td>
+                CCCD
+            </td>
+            <td>
+                Tên Chức Vụ
+            </td>
+            <td>
+                Ngày Sinh
+            </td>
+        </tr>
+        {% for a in nv %}
+        <tr>
+            <td>
+                {{ a[0] }}
+            </td>
+            <td>
+                {{ a[2] }}
+            </td>
+            <td>
+                {{ a[1] }}
+            </td>
+            <td>
+                {{ a[3] }}
+            </td>
+            <td>
+                {{ a[4] }}
+            </td>
+            <td>
+                {{ a[5] }}
+            </td>
+            <td>
+                {{ a[6] }}
+            </td>
+            <td>
+                {{ a[7] }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 {% endblock %}

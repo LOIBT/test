@@ -1,0 +1,50 @@
+{% extends "tracuukh.html" %}
+{% block tracuukh %}
+<h4>Kết Quả Tra Cứu</h4>
+<table>
+    <tr>
+        <td>
+            Mã Khách Hàng
+        </td>
+        <td>
+            Tên Khách Hàng
+        </td>
+        <td>
+            Địa Chỉ
+        </td>
+        <td>
+            Số Điện Thoại
+        </td>
+        <td>
+            Loại Khách Hàng
+        </td>
+        <td>
+            CCCD
+        </td>
+    </tr>
+    {% for a in kh %}
+    <tr>
+        <td>
+            {{ a[0] }}
+        </td>
+        <td>
+            {{ a[1] }}
+        </td>
+        <td>
+            {{ a[2] }}
+        </td>
+        <td>
+            {{ a[3] }}
+        </td>
+        <td>
+            {{ a[4] }}
+        </td>
+        <td>
+            {{ a[5] }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+

@@ -12,8 +12,15 @@ class ChiaTuDong(FlaskForm):
     nutTuDong = SubmitField(label='TuDongPhanChia')
 
 class TraCuuThongTinNV(FlaskForm):
-    cccd = StringField('Căn Cước Công Dân (CCCD)', validators=[DataRequired()])
+    manv = StringField('Mã Nhân Viên', validators=[DataRequired()])
     nutTraCuuNV = SubmitField(label='TraCuuNV')
+
+class TraCuuThongTinKH(FlaskForm):
+    makh = StringField('Mã Khách Hàng', validators=[DataRequired()])
+    nutTraCuuKH = SubmitField(label='TraCuuKH')
+
+class TraCuuThongTinAllKH(FlaskForm):
+    ToanBoKH = SubmitField(label='TraCuuToanBoKH')
 
 class TestForm(FlaskForm):
     makh = IntegerField(label='Mã Khách Hàng', validators=[DataRequired()])

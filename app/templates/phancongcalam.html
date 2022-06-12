@@ -8,8 +8,12 @@
         }
         td{
             width:10%;
-            height:50px;
-            text-align:center;
+            height:35%;
+            text-align: center;
+            margin:0
+        }
+        .left{
+            text-align:left;
         }
         .bangphancong{
             display:flex;
@@ -37,6 +41,14 @@
             font-size:20px;
             margin-left:200px;
         }
+        .btnchitiet{
+            padding:0;
+            margin:0;
+            font-size:12px;
+            border:0px;
+            background-color:white;
+            color:rgb(255, 92, 92);
+        }
     </style>
 </head>
     <div class="bangphancong">
@@ -46,9 +58,9 @@
         <p>
             ({{ ngayt2 }} - {{ ngayt6 }})
         </p>
-        <table>
+        <table class="mainTable">
             <tr>
-                <td>
+                <td colspan="2">
     
                 </td>
                 <td>
@@ -78,63 +90,768 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td rowspan="2">
                     Ca số 1
                 </td>
                 <td>
-                    {% for a in manvt2ca1 %}
+                    Số nhân viên giao hàng
+                </td>
+                <td>
+                    {% for a in slght2ca1 %}
                         {{ a[0] }}
                     {% endfor %}
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter1">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght2ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                 </td>
                 <td>
-                    {% for b in manvt3ca1 %}
+                    {% for b in slght3ca1 %}
                         {{ b[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter2">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght3ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                 </td>
                 <td>
-                    {% for c in manvt4ca1 %}
+                    {% for c in slght4ca1 %}
                         {{ c[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter3">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght4ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </td>
                 <td>
-                    {% for d in manvt5ca1 %}
+                    {% for d in slght5ca1 %}
                         {{ d[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter4">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter4" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght5ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </td>
                 <td>
-                    {% for e in manvt6ca1 %}
+                    {% for e in slght6ca1 %}
                         {{ e[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter5">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght6ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </td>
             </tr>
             <tr>
                 <td>
+                    Số nhân viên hành chính
+                </td>
+                <td>
+                    {% for a in slhct2ca1 %}
+                        {{ a[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter6">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+                            {% for e in manvhct2ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+                <td>
+                    {% for b in slhct3ca1 %}
+                        {{ b[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter7">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct3ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+                <td>
+                    {% for c in slhct4ca1 %}
+                        {{ c[0] }}
+                    {% endfor %}
+                    
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter8">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter8" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct4ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+                <td>
+                    {% for d in slhct5ca1 %}
+                        {{ d[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter9">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter9" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct5ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+                <td>
+                    {% for e in slhct6ca1 %}
+                        {{ e[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter10">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter10" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct6ca1 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">
                     Ca số 2
                 </td>
                 <td>
-                    {% for f in manvt2ca2 %}
+                    Số nhân viên giao hàng
+                </td>
+                <td>
+                    {% for f in slght2ca2 %}
                         {{ f[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter11">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter11" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght2ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </td>
                 <td>
-                    {% for g in manvt3ca2 %}
+                    {% for g in slght3ca2 %}
                         {{ g[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter12">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter12" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+
+                            {% for e in manvght3ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </td>
                 <td>
-                    {% for h in manvt4ca2 %}
+                    {% for h in slght4ca2 %}
                         {{ h[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter13">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter13" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght4ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </td>
                 <td>
-                    {% for i in manvt5ca2 %}
+                    {% for i in slght5ca2 %}
                         {{ i[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter14">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter14" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght5ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </td>
                 <td>
-                    {% for j in manvt6ca2 %}
+                    {% for j in slght6ca2 %}
                         {{ j[0] }}
                     {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter15">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter15" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvght6ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Số nhân viên hành chính
+                </td>
+                <td>
+                    {% for a in slhct2ca2 %}
+                        {{ a[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter16">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter16" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct2ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+                <td>
+                    {% for b in slhct3ca2 %}
+                        {{ b[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter17">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter17" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct3ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </td>
+                <td>
+                    {% for c in slhct4ca2 %}
+                        {{ c[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter18">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter18" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct4ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {% for d in slhct5ca2 %}
+                        {{ d[0] }}
+                    {% endfor %}
+
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter19">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter19" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct5ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {% for e in slhct6ca2 %}
+                        {{ e[0] }}
+                    {% endfor %}
+                    <br>
+                    <button type="button" class="btnchitiet" data-toggle="modal" data-target="#exampleModalCenter20">
+                        Chi Tiết
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter20" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Các nhân viên đăng ký ca làm</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div style="display:flex">
+                                <p class="left" style="margin-left:15px;font-weight:bold;">Mã Nhân Viên</p>
+                                <p class="left" style="margin-left:55px;font-weight:bold;">Họ Tên</p>
+                            </div>
+
+                            {% for e in manvhct6ca2 %}
+                                <div class="modal-body left" style="display:flex">
+                                    <p style="min-width:35%">{{ e[0] }}</p>
+                                    <p>{{ e[1] }}</p>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -169,8 +886,9 @@
             </p>
 
             {{ form.submit() }}
-            {{ formtd.nutTuDong() }}
         </div>
     </form>
+
+<!-- Modal -->
 
 {% endblock %}

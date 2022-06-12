@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+  <style>
+    table,td{
+      border: 1px solid black;
+      border-collapse: collapse;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <h4>Hôm nay ({{ homnay }})</h4>
+  <table>
+    <tr>
+      <td>
+        Mã Nhân Viên
+      </td>
+      <td>
+        Mã Vận Đơn
+      </td>
+      <td>
+        Thời Gian
+      </td>
+    </tr>
+    {% for a in giaohang %}
+    <tr>
+      <td>
+        {{ a[0] }}
+      </td>
+      <td>
+        {{ a[1] }}
+      </td>
+      <td>
+        {{ a[2] }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+  
+{% endblock %}
