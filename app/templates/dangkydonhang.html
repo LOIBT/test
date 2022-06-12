@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Đăng Ký Đơn Hàng</h1>
+    <div class="container">
+        <form method="POST" class="form-register">
+            {{ form.hidden_tag() }}
+
+            {{ form.cccd.label() }}
+            {{ form.cccd(class="form-control") }}
+
+            {{ form.tenkh.label() }}
+            {{ form.tenkh(class="form-control") }}
+
+            {{ form.dc_kh.label() }}
+            {{ form.dc_kh(class="form-control") }}
+            
+            {{ form.sdt.label() }}
+            {{ form.sdt(class="form-control") }}
+
+            {{ form.dc_gui.label() }}
+            {{ form.dc_gui(class="form-control") }}
+
+            {{ form.dc_nhan.label() }}
+            {{ form.dc_nhan(class="form-control") }}
+
+            {{ form.ghichu.label() }}
+            {{ form.ghichu(class="form-control") }}
+
+            {{ form.mota.label() }}
+            {{ form.mota(class="form-control") }}
+
+            {{ form.dai.label() }}
+            {{ form.dai(class="form-control") }}
+
+            {{ form.rong.label() }}
+            {{ form.rong(class="form-control") }}
+
+            {{ form.cao.label() }}
+            {{ form.cao(class="form-control") }}
+
+            {{ form.kl.label() }}
+            {{ form.kl(class="form-control") }}
+
+            {{ form.ml.label() }}
+            {{ form.ml(class="form-control") }}
+
+            {{ form.cod.label() }}
+            {{ form.cod(class="form-control") }}
+
+            {{ form.tennn.label() }}
+            {{ form.tennn(class="form-control") }}
+
+            {{ form.sdt_nn.label() }}
+            {{ form.sdt_nn(class="form-control") }}
+
+            {{ form.submit() }}
+        </form>
+    </div>
+{% endblock %}

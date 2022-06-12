@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.mavandon.label() }}
+            {{ form.mavandon() }}
+            <br>
+            {{ form.submit() }}
+        </form>
+    </div>
+    {% for donhang in dsdonhang %}
+    <div class="container" border> 
+        <p>Mã vận đơn: {{ donhang['mavandon'] }} </p>
+        <p>Trạng thái đơn hàng: {{ donhang['trangthai'] }} </p>
+        <p>Phí vận chuyển: {{ donhang['phivanchuyen'] }} </p>
+        <p>Thời gian đặt: {{ donhang['thoigian'] }} </p>
+    </div>
+
+    {% endfor %}
+{% endblock %}

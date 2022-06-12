@@ -1,0 +1,36 @@
+{% extends "tracuunv.html" %}
+{% block tracuulichsunv %}
+    <span>Lịch sử đơn hàng nhân viên đã đăng ký</span>
+    <table>
+        <tr>
+            <td>
+                Mã đơn hàng
+            </td>
+            <td>
+                Mã đăng ký
+            </td>
+            <td>
+                Mã vận đơn
+            </td>
+            <td>
+                Mã nhân viên
+            </td>
+        </tr>
+        {% for k in lichsunvhc %}
+           <tr>
+               <td>
+                   {{ k[0] }}
+               </td>
+               <td>
+                   {{ k[1] }}
+                </td>
+                <td>
+                   {{ k[2] }}
+                </td>
+                <td>
+                   {{ k[3] }}
+                </td>
+           </tr> 
+        {% endfor %}
+    </table>
+{% endblock %}

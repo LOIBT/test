@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.mavandon.label() }}
+            {{ form.mavandon() }}
+            <br>
+            {{ form.submit() }}
+        </form>
+    </div>
+    {% for phieu in dsphieu %}
+    <div class="container" border> 
+        <p>Mã đơn hàng: {{ phieu['madonhang'] }} </p>
+        <p>Mã vận đơn: {{ phieu['mavandon'] }} </p>
+        <p>Tên người gửi: {{ phieu['tennguoigui'] }} </p>
+        <p>Số điện thoại người gửi: {{ phieu['sdtgui'] }} </p>
+        <p>Địa chỉ gửi: {{ phieu['dcgui'] }} </p>
+        <p>Tên người nhận: {{ phieu['tennguoinhan'] }} </p>
+        <p>Số điện thoại người nhận: {{ phieu['sdtnhan'] }} </p>
+        <p>Địa chỉ nhận: {{ phieu['dcnhan'] }} </p>
+        <p>Mô tả sản phẩm: {{ phieu['mota'] }} </p>
+        <p>Thời gian đặt: {{ phieu['thoigiandat'] }} </p>
+    </div>
+
+    {% endfor %}
+{% endblock %}

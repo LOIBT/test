@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <style>
+        table, td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        td{
+            width:10%;
+            height:50px;
+            text-align:center;
+        }
+        .bangphancong{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        p{
+            padding:0;
+            margin:0 0 10px;
+        }
+        .tieudebang{
+            margin-top:30px;
+            font-size:28px;
+            font-weight: bold;
+            text-align:center;
+        }
+        hr{
+            margin:30px auto;
+            width:40%;
+            height:1px;
+            border-width:0;
+            background-color:black;
+        }
+        .formdki{
+            font-size:20px;
+            margin-left:200px;
+        }
+    </style>
+</head>
+    <div class="bangphancong">
+        <p class="tieudebang">
+            Lịch phân công tuần 
+        </p>
+        <p>
+            ({{ ngayt2 }} - {{ ngayt6 }})
+        </p>
+        <table>
+            <tr>
+                <td>
+    
+                </td>
+                <td>
+                    Thứ 2
+                    <br>
+                    ({{ ngayt2 }})
+                </td>
+                <td>
+                    Thứ 3
+                    <br>
+                    ({{ ngayt3 }})
+                </td>
+                <td>
+                    Thứ 4
+                    <br>
+                    ({{ ngayt4 }})
+                </td>
+                <td>
+                    Thứ 5
+                    <br>
+                    ({{ ngayt5 }})
+                </td>
+                <td>
+                    Thứ 6
+                    <br>
+                    ({{ ngayt6 }})
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ca số 1
+                </td>
+                <td>
+                    {% for a in manvt2ca1 %}
+                        {{ a[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for b in manvt3ca1 %}
+                        {{ b[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for c in manvt4ca1 %}
+                        {{ c[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for d in manvt5ca1 %}
+                        {{ d[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for e in manvt6ca1 %}
+                        {{ e[0] }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ca số 2
+                </td>
+                <td>
+                    {% for f in manvt2ca2 %}
+                        {{ f[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for g in manvt3ca2 %}
+                        {{ g[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for h in manvt4ca2 %}
+                        {{ h[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for i in manvt5ca2 %}
+                        {{ i[0] }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for j in manvt6ca2 %}
+                        {{ j[0] }}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <hr>
+
+    <div>
+        <p class="tieudebang">
+            Đăng kí ca làm
+        </p>
+    </div>
+
+    <form method="POST">
+        <div class="formdki">
+            <p>
+                {{ form.hidden_tag() }}
+                {{ form.entrydate.label() }}
+                {{ form.entrydate() }}
+            </p>
+
+            <p>
+                {{ form.hidden_tag() }}
+                {{ form.manv.label() }}
+                {{ form.manv() }}
+            </p>
+
+            <p>
+                {{ form.hidden_tag() }}
+                {{ form.ca.label() }}
+                {{ form.ca() }}
+            </p>
+
+            {{ form.submit() }}
+            {{ formtd.nutTuDong() }}
+        </div>
+    </form>
+
+{% endblock %}

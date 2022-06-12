@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <style>
+        table, td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        td{
+            width:10%;
+            height:50px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <div class="formdki">
+            <p>
+                {{ form.hidden_tag() }}
+                {{ form.cccd.label() }}
+                {{ form.cccd() }}
+            </p>
+
+            <p onclick="TraCuuNV()">
+                {{ form.nutTraCuuNV() }}
+            </p>
+            
+        </div>
+    </form>
+
+    <div>
+        <p> 
+            {% for i in thongtin %}
+                Email: {{ i[1] }}
+            {% endfor %}
+        </p>
+        <p>
+            {% for i in thongtin %}
+                Tên Nhân Viên: {{ i[2] }}
+            {% endfor %}
+        </p>
+        <p>
+            {% for i in thongtin %}
+                Số điện thoại: {{ i[3] }}
+            {% endfor %}
+        </p>
+        <p>
+            {% for i in thongtin %}
+                Địa Chỉ: {{ i[4] }}
+            {% endfor %}
+        </p>
+        <p>
+            {% for i in thongtin %}
+                CCCD: {{ i[5] }}
+            {% endfor %}
+        </p>
+        <p>   
+            {% for i in thongtin %}
+                Chức Vụ: {{ chucvu[0] }}
+            {% endfor %}
+        </p>
+        <p>
+            {% for i in thongtin %}
+                Ngày Sinh: {{ ngaysinh[0] }}
+            {% endfor %}
+        </p>
+    </div>
+
+    {% block tracuulichsunv %}
+    
+    {% endblock %}
+</body>
+{% endblock %}

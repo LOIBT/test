@@ -1,0 +1,218 @@
+/*CSS for header*/
+.position-relative{
+    position: relative;
+}
+.header-navbar{
+    height: 100px;
+    padding-top: 30px;
+    background-color: #ee0033;
+}
+.nav-item{
+    display: inline-block;
+}
+
+.position-left{
+    position: absolute;
+    right: 0px;
+    bottom:  -20px;
+
+}
+.margin_left_right_10{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.padding_left_right_50{
+    padding: 0 50px 0 50px;
+}
+.padding_left_right_50:hover{
+    opacity: 0.9;
+    
+}
+.margin_right_50{
+    margin-right: 50;
+}
+.border_radius_30{
+    border-radius: 30px;
+}
+.backgroud_color{
+    background-color: #44494d;
+}
+.color-text{
+    color: #ffff;
+}
+.color-text:hover{
+    color: #ffff;
+    opacity: 0.9;
+}
+.cursor_pointer{
+    cursor: pointer;
+}
+/*CSS for navigation*/
+.Header-navigation{
+    background-color: #44494d;
+}
+.navbar-nav li{
+    position: relative;
+    padding-left: 20px; 
+}
+
+.navbar-nav li a{
+    color: #f8f8f8;
+    padding-top: 10px;
+    
+}
+.navbar-nav a{
+    color: #f8f8f8 !important;
+}
+.navbar-nav ul.sub-menu  {
+    position: absolute;
+    display: none;
+    background-color: #44494d;
+    width: 250px;
+    
+}
+.navbar-nav ul.sub-menu li {
+    padding-top: 10px;
+}
+.navbar-nav ul.sub-menu li:last-child{
+    padding-bottom: 20px;
+}
+.navbar-nav li:hover ul.sub-menu {
+    display: block;
+}
+.navbar-nav li i {
+    position: absolute;
+    right: -10px;
+    top: 40%;
+
+}
+/*CSS for body*/
+.body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffff;
+}
+.slider {
+    width: 100%;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.sliders{
+    width: 500%;
+    height: 500px;
+    display: flex;
+}
+.sliders input{
+    display: none;
+}
+.slide{
+    width: 20%;
+    transition: 2s;
+}
+.slide img{
+    width: 100%;
+    height: 500px;
+}
+/*css for manual slide nagivation*/
+.nagigation-manual{
+    position: absolute;
+    width: 100%;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+
+}
+.manual-btn{
+    border: 2px solid #ffff;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
+}
+.manual-btn:not(:last-child){
+    margin-right: 40px;
+}
+.manual-btn:hover{
+    background: #40d3dc;
+}
+#radio1:checked ~ .first{
+    margin-left: 0;
+} 
+#radio2:checked ~ .first{
+    margin-left: -20%;
+} 
+#radio3:checked ~ .first{
+    margin-left: -40%;
+} 
+#radio4:checked ~ .first{
+    margin-left: -60%;
+} 
+/**css for automatic navigation*/
+.navigation-auto{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 460px;
+
+}
+.navigation-auto div{
+    border: 2px solid #40D3DC;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.navigation-auto div:not(:last-child){
+    margin-right: 40px;
+}
+#radio1:checked ~ .navigation-auto .auto-btn1{
+    background: #ee0033;
+}
+#radio2:checked ~ .navigation-auto .auto-btn2{
+    background: #ee0033;
+}
+#radio3:checked ~ .navigation-auto .auto-btn3{
+    background: #ee0033;
+}
+#radio4:checked ~ .navigation-auto .auto-btn{
+    background: #ee0033;
+}
+/*CSS for footer*/
+.footer{
+    margin: 0;
+    padding: 0;
+    height: 200px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0000;
+    position: relative;
+}
+.contact{
+    position: absolute;
+    left: 70px;
+}
+.contact-text {
+    font-size: 24px;
+    margin-left: 10px;
+}
+.contact-icons{
+    padding-top: 20px;
+    
+}
+.contact-icon{
+    font-size: 22px;
+    margin-left: 10px;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
